@@ -46,16 +46,18 @@ class Renderer {
 
     // ctx:          canvas context
     drawSlide0(ctx) {
-        color = [0, 255, 0, 255];
-        pt1 = {x:200, y:100};
-        pt2 = {x:400, y:300};
+        let color = [0, 0, 255, 255];
+        let pt1 = {x:200, y:250};
+        let pt2 = {x:600, y:400};
         this.drawRectangle(pt1, pt2, color, ctx);
-        console.log("did we get here?");
     }
 
     // ctx:          canvas context
     drawSlide1(ctx) {
-
+        let center = {x:250, y:250};
+        let radius = 100;
+        let color = [255, 0, 0, 255];
+        this.drawCircle(center, radius, color, ctx);
     }
 
     // ctx:          canvas context
@@ -73,9 +75,10 @@ class Renderer {
     // color:        array of int [R, G, B, A]
     // ctx:          canvas context
     drawRectangle(left_bottom, right_top, color, ctx) {
-        left_top = {x:left_bottom.x, y: right_top.x};
-        right_bottom={x:right_top.x, y:left_bottom.y};
-    
+        let left_top = {x:left_bottom.x, y: right_top.y};
+        let right_bottom={x:right_top.x, y:left_bottom.y};
+        
+        
         //top line
         this.drawLine(left_top, right_top, color, ctx);
         //bottom line
@@ -92,7 +95,19 @@ class Renderer {
     // color:        array of int [R, G, B, A]
     // ctx:          canvas context
     drawCircle(center, radius, color, ctx) {
-        curvenum = this.setNumCurveSections(n);
+        let cnum = this.num_curve_sections;
+        let degrees = 360/cnum;
+        let ptx = center.x + radius;
+        let pty = center.y 
+        let point = {x: ptx, y:pty};
+
+        for(let i = degrees; i <=360; i=i+degrees) {
+            ptx = center.x + (radius * Math.cos(i));
+            pty = center.y + (radius * Math.sin(i));
+            let point2 = {x: ptx, y:pty};
+            this.drawLine(point, point2, color, ctx);
+            point = point2;
+        }
         
     }
 
