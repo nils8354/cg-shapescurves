@@ -27,7 +27,7 @@ class Renderer {
     drawSlide(slide_idx) {
         this.slide_idx = slide_idx;
         this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
-
+        
         switch (this.slide_idx) {
             case 0:
                 this.drawSlide0(framebuffer);
@@ -46,7 +46,11 @@ class Renderer {
 
     // ctx:          canvas context
     drawSlide0(ctx) {
-        
+        color = [0, 255, 0, 255];
+        pt1 = {x:200, y:100};
+        pt2 = {x:400, y:300};
+        this.drawRectangle(pt1, pt2, color, ctx);
+        console.log("did we get here?");
     }
 
     // ctx:          canvas context
@@ -69,6 +73,17 @@ class Renderer {
     // color:        array of int [R, G, B, A]
     // ctx:          canvas context
     drawRectangle(left_bottom, right_top, color, ctx) {
+        left_top = {x:left_bottom.x, y: right_top.x};
+        right_bottom={x:right_top.x, y:left_bottom.y};
+    
+        //top line
+        this.drawLine(left_top, right_top, color, ctx);
+        //bottom line
+        this.drawLine(left_bottom, right_bottom, color, ctx);
+        //left line
+        this.drawLine(left_bottom, left_top, color, ctx);
+        //right line
+        this.drawLine(right_bottom, right_top, color, ctx);
         
     }
 
@@ -77,6 +92,7 @@ class Renderer {
     // color:        array of int [R, G, B, A]
     // ctx:          canvas context
     drawCircle(center, radius, color, ctx) {
+        curvenum = this.setNumCurveSections(n);
         
     }
 
