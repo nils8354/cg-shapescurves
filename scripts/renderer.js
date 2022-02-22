@@ -54,8 +54,8 @@ class Renderer {
 
     // ctx:          canvas context
     drawSlide1(ctx) {
-        let center = {x:250, y:250};
-        let radius = 100;
+        let center = {x:350, y:350};
+        let radius = 200;
         let color = [255, 0, 0, 255];
         this.drawCircle(center, radius, color, ctx);
     }
@@ -96,14 +96,15 @@ class Renderer {
     // ctx:          canvas context
     drawCircle(center, radius, color, ctx) {
         let cnum = this.num_curve_sections;
+        let totalDeg = 180*(cnum-2);
         let degrees = 360/cnum;
         let ptx = center.x + radius;
         let pty = center.y 
         let point = {x: ptx, y:pty};
 
-        for(let i = degrees; i <=360; i=i+degrees) {
-            ptx = center.x + (radius * Math.cos(i));
-            pty = center.y + (radius * Math.sin(i));
+        for(let i = degrees; i <=361; i=i+degrees) {
+            ptx = center.x + (radius * Math.cos(Math.PI * 2 * i/360));
+            pty = center.y + (radius * Math.sin(Math.PI * 2 * i/360));
             let point2 = {x: ptx, y:pty};
             this.drawLine(point, point2, color, ctx);
             point = point2;
@@ -125,8 +126,7 @@ class Renderer {
     // pt1:          object ({x: __, y: __})
     // color:        array of int [R, G, B, A]
     // ctx:          canvas context
-    drawLine(pt0, pt1, color, ctx)
-    {
+    drawLine(pt0, pt1, color, ctx) {
         ctx.strokeStyle = 'rgba(' + color[0] + ',' + color[1] + ',' + color[2] + ',' + (color[3]/255.0) + ')';
         ctx.beginPath();
         ctx.moveTo(pt0.x, pt0.y);
