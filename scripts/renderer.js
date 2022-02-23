@@ -77,7 +77,13 @@ class Renderer {
     drawRectangle(left_bottom, right_top, color, ctx) {
         let left_top = {x:left_bottom.x, y: right_top.y};
         let right_bottom={x:right_top.x, y:left_bottom.y};
-        
+
+        if(this.show_points == true) {
+            this.drawCirclePoint(left_bottom, 5, color, ctx);
+            this.drawCirclePoint(left_top, 5, color, ctx);
+            this.drawCirclePoint(right_bottom, 5, color, ctx);
+            this.drawCirclePoint(right_top, 5, color, ctx);
+        }
         
         //top line
         this.drawLine(left_top, right_top, color, ctx);
@@ -96,13 +102,16 @@ class Renderer {
     // ctx:          canvas context
     drawCircle(center, radius, color, ctx) {
         let cnum = this.num_curve_sections;
-        let totalDeg = 180*(cnum-2);
         let degrees = 360/cnum;
         let ptx = center.x + radius;
         let pty = center.y 
-        let point = {x: ptx, y:pty};
+        let firstpoint = {x: ptx, y:pty};
+        let point = firstpoint;
 
-        for(let i = degrees; i <=361; i=i+degrees) {
+        for(let i = degrees; i <360; i=i+degrees) {
+            if(this.show_points == true) {
+                this.drawCirclePoint(point, 5, color, ctx);
+            }
             ptx = center.x + (radius * Math.cos(Math.PI * 2 * i/360));
             pty = center.y + (radius * Math.sin(Math.PI * 2 * i/360));
             let point2 = {x: ptx, y:pty};
@@ -110,6 +119,10 @@ class Renderer {
             point = point2;
         }
         
+        if(this.show_points == true) {
+            this.drawCirclePoint(point, 5, color, ctx);
+        }
+        this.drawLine(point, firstpoint, color,ctx);
     }
 
     // pt0:          object ({x: __, y: __})
@@ -119,6 +132,7 @@ class Renderer {
     // color:        array of int [R, G, B, A]
     // ctx:          canvas context
     drawBezierCurve(pt0, pt1, pt2, pt3, color, ctx) {
+
         
     }
 
@@ -132,5 +146,23 @@ class Renderer {
         ctx.moveTo(pt0.x, pt0.y);
         ctx.lineTo(pt1.x, pt1.y);
         ctx.stroke();
+    }
+
+    drawCirclePoint(center, radius, color, ctx) {
+        let cnum = 36;
+        let degrees = 360/cnum;
+        let ptx = center.x + radius;
+        let pty = center.y 
+        let firstpoint = {x: ptx, y:pty};
+        let point = firstpoint;
+
+        for(let i = degrees; i <360; i=i+degrees) {
+            ptx = center.x + (radius * Math.cos(Math.PI * 2 * i/360));
+            pty = center.y + (radius * Math.sin(Math.PI * 2 * i/360));
+            let point2 = {x: ptx, y:pty};
+            this.drawLine(point, point2, color, ctx);
+            point = point2;
+        }
+        this.drawLine(point, firstpoint, color,ctx);
     }
 };
