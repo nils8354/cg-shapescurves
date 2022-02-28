@@ -54,7 +54,7 @@ class Renderer {
 
     // ctx:          canvas context
     drawSlide1(ctx) {
-        let center = {x:350, y:350};
+        let center = {x:400, y:350};
         let radius = 200;
         let color = [255, 0, 0, 255];
         this.drawCircle(center, radius, color, ctx);
