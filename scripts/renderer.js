@@ -63,10 +63,10 @@ class Renderer {
     // ctx:          canvas context
     drawSlide2(ctx) {
         let color = [230, 66, 245, 255];
-        let pt0 = {x:200, y:250};
-        let pt1 = {x:250, y:400};
-        let pt2 = {x:500, y:390};
-        let pt3 = {x:450, y:250};
+        let pt0 = {x:100, y:150};
+        let pt1 = {x:250, y:500};
+        let pt2 = {x:700, y:590};
+        let pt3 = {x:650, y:250};
         this.drawBezierCurve(pt0, pt1, pt2, pt3, color, ctx);
 
     }
