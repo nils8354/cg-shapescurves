@@ -62,7 +62,7 @@ class Renderer {
 
     // ctx:          canvas context
     drawSlide2(ctx) {
-        let color = [255, 0, 0, 255];
+        let color = [230, 66, 245, 255];
         let pt0 = {x:200, y:250};
         let pt1 = {x:250, y:400};
         let pt2 = {x:500, y:390};
@@ -73,7 +73,7 @@ class Renderer {
 
     // ctx:          canvas context
     drawSlide3(ctx) {
-        let color = [155, 10, 50, 255];
+        let color = [155, 155, 66, 255];
         //Z
         this.drawLine({x:100, y:400}, {x:300, y:400}, color, ctx);
         this.drawLine({x:300, y:400}, {x:100, y:200}, color, ctx);
@@ -82,12 +82,12 @@ class Renderer {
         //a
         this.drawCircle({x:400, y:260}, 60, color, ctx);
         //Tail of a, could change to bezier curve or to this 'a'
-        this.drawLine({x:460, y:260}, {x:465, y:200}, color, ctx);
+        this.drawBezierCurve({x:460, y:260}, {x:460, y:240}, {x:460, y:230}, {x:485, y:200}, color, ctx);
 
         //k
-        this.drawLine({x:520, y:200}, {x:520, y:400}, color, ctx);
-        this.drawLine({x:520, y:300}, {x:620, y:400}, color, ctx);
-        this.drawLine({x:520, y:300}, {x:620, y:200}, color, ctx);
+        this.drawLine({x:540, y:200}, {x:540, y:400}, color, ctx);
+        this.drawLine({x:540, y:300}, {x:640, y:400}, color, ctx);
+        this.drawLine({x:540, y:300}, {x:640, y:200}, color, ctx);
 
     }
 
@@ -161,11 +161,14 @@ class Renderer {
         let pty = pt0.y;
         let point = pt0;
         let point2 = null;
-        for(let i= 0; i < cnum; i++) {
-            ptx = (((1-t)**3) * pt0.x) + ((3*(1-t)**2)*pt1.x) + ((3*(1-t)* (t**2))*pt2.x) + (t**3)*pt3.x;
-            ptx = ptx - point.x;
-            pty = pty - point.y;
-            pty = (((1-t)**3) * pt0.y) + ((3*(1-t)**2)*pt1.y) + ((3*(1-t)* (t**2))*pt2.y) + (t**3)*pt3.y;
+        for(let i= 0; i <= cnum; i++) {
+            let t0 =  Math.pow((1-t), 3);
+            let t1 = Math.pow(1-t,2);
+            let t2 = Math.pow(t,2);
+            let t3 = Math.pow(t, 3);
+            
+            ptx = t0 * pt0.x + (3* t1 * t *pt1.x) + ((3*(1-t)* t2)*pt2.x) + t3*pt3.x;
+            pty = t0 * pt0.y + (3* t1 * t *pt1.y) + ((3*(1-t)* t2)*pt2.y) + t3*pt3.y;
             point2 = {x:ptx, y:pty};
             t = t + 1/cnum;
             
